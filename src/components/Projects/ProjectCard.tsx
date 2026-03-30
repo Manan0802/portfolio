@@ -5,9 +5,10 @@ import vanillaTilt from 'vanilla-tilt';
 
 interface ProjectCardProps {
   project: Project;
+  onOpenModal: () => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenModal }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,8 +26,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <div
       ref={cardRef}
-      className="glass rounded-2xl overflow-hidden hover:glow-blue transition-all duration-300 project-card"
+      className="glass rounded-2xl overflow-hidden hover:glow-blue transition-all duration-300 project-card cursor-pointer"
       data-tilt
+      onClick={onOpenModal}
     >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
@@ -39,6 +41,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           <span className="px-3 py-1 rounded-full text-xs font-medium bg-primary/80 text-white">
             {project.category}
           </span>
+        </div>
+        {/* Click overlay hint */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
+          <span className="text-white font-medium text-lg">View Details</span>
         </div>
       </div>
 
@@ -72,6 +78,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-secondary hover:text-primary transition-colors text-sm"
               data-cursor="hover"
+              onClick={(e) => e.stopPropagation()}
             >
               <FiGithub /> Code
             </a>
@@ -83,6 +90,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-secondary hover:text-primary transition-colors text-sm"
               data-cursor="hover"
+              onClick={(e) => e.stopPropagation()}
             >
               <FiExternalLink /> Live
             </a>
@@ -94,6 +102,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-secondary hover:text-primary transition-colors text-sm"
               data-cursor="hover"
+              onClick={(e) => e.stopPropagation()}
             >
               <FiCode /> Colab
             </a>

@@ -13,6 +13,18 @@ export const Hero: React.FC = () => {
   const [currentTagline, setCurrentTagline] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile for performance optimization
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Typewriter effect
   useEffect(() => {
@@ -56,16 +68,17 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative h-screen w-full overflow-hidden">
-      {/* 3D Character Background */}
-      <CharacterScene showParticles={true} particleCount={15000} />
+      {/* 3D Character Background - hidden on mobile for performance */}
+      {!isMobile && <CharacterScene showParticles={true} particleCount={15000} />}
 
       {/* Name behind character */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         <h1
-          className="font-bebas font-black text-white opacity-20 select-none"
+          className="font-bebas font-black text-white select-none"
           style={{
             fontSize: 'clamp(80px, 15vw, 200px)',
             letterSpacing: '0.1em',
+            opacity: isMobile ? 0.15 : 0.2,
           }}
         >
           MANAN KUMAR
@@ -75,7 +88,7 @@ export const Hero: React.FC = () => {
       {/* Content overlay */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
         {/* Tagline with typewriter effect */}
-        <div className="mt-48 md:mt-32 text-center pointer-events-auto">
+        <div className={`${isMobile ? 'mt-24' : 'mt-48 md:mt-32'} text-center pointer-events-auto`}>
           <p className="text-lg md:text-xl text-secondary font-space-grotesk h-8">
             {displayedText}
             <span className="typewriter-cursor" />
@@ -83,7 +96,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* CTA Buttons */}
-        <div className="absolute bottom-32 md:bottom-24 flex flex-col md:flex-row gap-4 pointer-events-auto">
+        <div className={`absolute ${isMobile ? 'bottom-20' : 'bottom-32 md:bottom-24'} flex flex-col md:flex-row gap-4 pointer-events-auto`}>
           <GlowButton
             variant="primary"
             size="lg"

@@ -4,6 +4,7 @@ import { GlowButton } from '../shared/GlowButton';
 import { FiGithub, FiLinkedin, FiMail, FiCode } from 'react-icons/fi';
 import { Particles } from '../Character/Particles';
 import { Canvas } from '@react-three/fiber';
+import emailjs from '@emailjs/browser';
 import './Contact.css';
 
 const socialLinks = [
@@ -31,17 +32,33 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission (EmailJS integration later)
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      // EmailJS integration
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          contact_type: formData.type,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      setIsSubmitting(false);
+      setSubmitted(true);
 
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', message: '', type: 'Looking to Hire' });
-    }, 3000);
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', message: '', type: 'Looking to Hire' });
+      }, 3000);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      setIsSubmitting(false);
+      alert('Failed to send message. Please try again or email me directly at 04manank@gmail.com');
+    }
   };
 
   return (

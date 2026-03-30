@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SectionTitle } from '../shared/SectionTitle';
 import { ProjectCard } from './ProjectCard';
 import { FeaturedProject } from './FeaturedProject';
+import { ProjectModal } from './ProjectModal';
 import { projects, getProjectsByCategory } from '../../data/projects';
 import './Projects.css';
 
@@ -9,8 +10,20 @@ const categories = ['All', 'AI/LLM', 'ML/Data', 'Full Stack'];
 
 export const Projects: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const filteredProjects = getProjectsByCategory(activeCategory);
   const featuredProject = projects.find(p => p.featured);
+
+  const handleOpenModal = (project: typeof projects[0]) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
 
   return (
     <section id="projects" className="py-32 px-6 relative">
@@ -41,7 +54,7 @@ export const Projects: React.FC = () => {
 
         {/* Featured Project */}
         {featuredProject && activeCategory === 'All' && (
-          <FeaturedProject project={featuredProject} />
+          <FeaturedProject project={featuredProject} onOpenModal={() => handleOpenModal(featuredProject)} />
         )}
 
         {/* Project Grid */}
@@ -49,10 +62,13 @@ export const Projects: React.FC = () => {
           {filteredProjects
             .filter(p => !p.featured || activeCategory !== 'All')
             .map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} onOpenModal={() => handleOpenModal(project)} />
             ))}
         </div>
       </div>
+
+      {/* Project Modal */}
+      <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={handleCloseModal} />
     </section>
   );
 };

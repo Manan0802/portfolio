@@ -225,3 +225,260 @@ body {
 .flip-card-back {
   transform: rotateY(180deg);
 }
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  /* Reduce particle count effect via CSS */
+  .character-container {
+    max-height: 80vh;
+  }
+
+  /* Adjust hero name size */
+  #hero h1 {
+    font-size: clamp(60px, 12vw, 150px) !important;
+  }
+
+  /* Smaller skills globe container */
+  #about .h-\[400px\] {
+    height: 300px !important;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Typography adjustments */
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  h2 {
+    font-size: 1.75rem !important;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  /* Section padding */
+  .py-32 {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  /* Hide 3D character on mobile for performance */
+  .character-container {
+    display: none !important;
+  }
+
+  /* Hero adjustments */
+  #hero {
+    height: auto !important;
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+  }
+
+  #hero h1 {
+    font-size: clamp(48px, 10vw, 80px) !important;
+    opacity: 0.15 !important;
+  }
+
+  #hero .mt-48 {
+    margin-top: 1rem !important;
+  }
+
+  #hero .bottom-32 {
+    bottom: 4rem !important;
+  }
+
+  /* Stack hero buttons vertically */
+  #hero .flex-col.md\:flex-row {
+    flex-direction: column !important;
+  }
+
+  /* Navbar mobile */
+  nav {
+    padding: 1rem !important;
+  }
+
+  /* About section - stack columns */
+  #about .grid.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Skills globe smaller */
+  #about .h-\[400px\] {
+    height: 250px !important;
+  }
+
+  /* Stats grid - 2 columns */
+  #about .grid-cols-2.md\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Experience timeline - single column */
+  #experience .relative.flex.items-center {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-left: 20px !important;
+  }
+
+  #experience .relative.Flex.items-center::before {
+    left: -20px !important;
+  }
+
+  #experience .w-1\/2 {
+    width: 100% !important;
+    padding-left: 20px !important;
+    padding-right: 0 !important;
+    text-align: left !important;
+  }
+
+  #experience .absolute.left-1\/2 {
+    left: -20px !important;
+  }
+
+  /* Timeline card text alignment fix */
+  #experience .text-right {
+    text-align: left !important;
+  }
+
+  /* Projects - single column grid */
+  #projects .md\:grid-cols-2,
+  #projects .lg\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Featured project - single column */
+  #projects .featured-project-card .grid.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  #projects .featured-project-card .h-\[400px\] {
+    height: 250px !important;
+  }
+
+  /* Services - single column */
+  #services .md\:grid-cols-2,
+  #services .lg\:grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Service flip cards - disable flip on mobile, show front only */
+  .flip-card:hover .flip-card-inner {
+    transform: none !important;
+  }
+
+  /* Show back content below front on mobile */
+  .flip-card-back {
+    position: relative !important;
+    transform: none !important;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Contact - single column */
+  #contact .grid.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Modal full width on mobile */
+  .modal-container {
+    width: 95% !important;
+    max-height: 95vh !important;
+  }
+
+  .modal-hero {
+    height: 200px !important;
+  }
+
+  .modal-body {
+    padding: 1.5rem !important;
+  }
+
+  /* Footer adjustments */
+  footer .flex-wrap {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 1rem !important;
+  }
+
+  /* Disable hover effects on mobile */
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover {
+    transform: none !important;
+  }
+
+  /* Reduce glow effects */
+  .glow-blue,
+  .glow-purple {
+    box-shadow: none !important;
+  }
+}
+
+/* Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  /* Even smaller typography */
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  /* Section padding */
+  .py-32 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* Navbar logo smaller */
+  nav .text-2xl {
+    font-size: 1.25rem !important;
+  }
+
+  /* Stats - smaller text */
+  #about .text-4xl.md\:text-5xl {
+    font-size: 2rem !important;
+  }
+
+  /* Buttons full width */
+  .glow-button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+
+  /* Disable tilt effect on mobile */
+  .project-card {
+    transform: none !important;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

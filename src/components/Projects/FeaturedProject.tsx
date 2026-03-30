@@ -6,11 +6,15 @@ import type { Project } from '../../data/projects';
 
 interface FeaturedProjectProps {
   project: Project;
+  onOpenModal?: () => void;
 }
 
-export const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => {
+export const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project, onOpenModal }) => {
   return (
-    <div className="glass rounded-2xl overflow-hidden mb-16">
+    <div
+      className="glass rounded-2xl overflow-hidden mb-16 cursor-pointer featured-project-card"
+      onClick={onOpenModal}
+    >
       <div className="grid md:grid-cols-2 gap-8 p-8">
         {/* Left: Content */}
         <div className="flex flex-col justify-center">
@@ -59,6 +63,7 @@ export const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
                 data-cursor="hover"
+                onClick={(e) => e.stopPropagation()}
               >
                 <FiGithub /> GitHub
               </a>
@@ -70,6 +75,7 @@ export const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white hover:bg-blue-600 transition-colors"
                 data-cursor="hover"
+                onClick={(e) => e.stopPropagation()}
               >
                 <FiExternalLink /> Live App
               </a>
@@ -78,7 +84,7 @@ export const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => 
         </div>
 
         {/* Right: 3D Floating Element */}
-        <div className="h-[400px] relative">
+        <div className="h-[400px] relative group">
           <Canvas
             camera={{ position: [0, 0, 8], fov: 45 }}
             gl={{ antialias: true, alpha: true }}
@@ -100,9 +106,14 @@ export const FeaturedProject: React.FC<FeaturedProjectProps> = ({ project }) => 
               <img
                 src={project.image}
                 alt="App preview"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
+          </div>
+
+          {/* Click overlay hint */}
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+            <span className="text-white font-medium text-lg">View Case Study</span>
           </div>
         </div>
       </div>
